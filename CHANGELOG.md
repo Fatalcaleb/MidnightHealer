@@ -1,5 +1,9 @@
 # MidnightHealer – Changelog
 
+## v0.12.2
+- Fixed Tools panel layout (scrollable; no clipping)
+- Fixed Test buttons to automatically enable test mode and show frames
+
 ## v0.12.0
 - Added UI for layout presets (Classic / VuhDo / Minimal)
 - Added Profile sharing (Import/Export) UI
