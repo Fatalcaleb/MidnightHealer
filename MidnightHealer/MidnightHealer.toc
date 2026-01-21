@@ -1,0 +1,23 @@
+## Interface: 120001
+## Title: MidnightHealer
+## Notes: Custom healing frames + click-casting + triage tools (Midnight-safe)
+## Author: Fatalcaleb
+## Version: 0.12.0
+## SavedVariables: MidnightHealerDB
+
+Frames.xml
+Core.lua
+Profiles.lua
+Presets.lua
+SpecProfiles.lua
+ToolsUI.lua
+ColorsUI.lua
+TestMode.lua
+Frames.lua
+ClickCast.lua
+SecureApply.lua
+Hots.lua
+Triage.lua
+Cluster.lua
+Options.lua
+AboutUI.lua

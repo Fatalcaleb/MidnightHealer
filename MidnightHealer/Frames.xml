@@ -1,0 +1,138 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Button name="MidnightHealerUnitButtonTemplate" virtual="true" inherits="SecureUnitButtonTemplate">
+    <Size x="140" y="28"/>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture parentKey="Bg" setAllPoints="true" alpha="0.35">
+          <Color r="0" g="0" b="0" a="1"/>
+        </Texture>
+      </Layer>
+      <Layer level="BORDER">
+        <Texture parentKey="Border" setAllPoints="true" alpha="0.9">
+          <Color r="0.2" g="0.2" b="0.2" a="1"/>
+        </Texture>
+      </Layer>
+    </Layers>
+
+    <Frames>
+      <StatusBar parentKey="HealthBar">
+        <Anchors>
+          <Anchor point="TOPLEFT" x="2" y="-2"/>
+          <Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
+        </Anchors>
+        <BarTexture file="Interface\TARGETINGFRAME\UI-StatusBar"/>
+        <MinMaxValues min="0" max="1"/>
+        <Value val="1"/>
+      </StatusBar>
+
+      <FontString parentKey="NameText" inherits="GameFontNormal">
+        <Anchors>
+          <Anchor point="LEFT" x="24" y="0"/>
+        </Anchors>
+        <Color r="1" g="1" b="1"/>
+        <Text>Unit</Text>
+      </FontString>
+
+      <FontString parentKey="HpText" inherits="GameFontNormalSmall">
+        <Anchors>
+          <Anchor point="RIGHT" x="-6" y="0"/>
+        </Anchors>
+        <Color r="1" g="1" b="1"/>
+        <Text>100%</Text>
+      </FontString>
+
+      <Texture parentKey="LowHpGlow" setAllPoints="true" alpha="0">
+        <Color r="1" g="0" b="0" a="0.18"/>
+      </Texture>
+
+      <Frame parentKey="HotRow">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" x="4" y="4"/>
+        </Anchors>
+        <Size x="120" y="10"/>
+      </Frame>
+
+      <!-- Big debuff icon box (top-left) -->
+      <Frame parentKey="DebuffBox">
+        <Anchors>
+          <Anchor point="TOPLEFT" x="2" y="-2"/>
+        </Anchors>
+        <Size x="18" y="18"/>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <Texture parentKey="Icon" setAllPoints="true" alpha="0">
+              <Color r="0" g="0" b="0" a="1"/>
+            </Texture>
+          </Layer>
+          <Layer level="BORDER">
+            <Texture parentKey="Border" setAllPoints="true" alpha="0">
+              <Color r="1" g="1" b="1" a="1"/>
+            </Texture>
+          </Layer>
+        </Layers>
+      </Frame>
+
+      <!-- Role icon (tiny) -->
+      <Texture parentKey="RoleIcon">
+        <Size x="12" y="12"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" x="22" y="-3"/>
+        </Anchors>
+        <Alpha val="0"/>
+      </Texture>
+
+      <!-- Raid group label -->
+      <FontString parentKey="GroupText" inherits="GameFontHighlightSmall">
+        <Anchors>
+          <Anchor point="TOPRIGHT" x="-4" y="-3"/>
+        </Anchors>
+        <Color r="1" g="1" b="1" a="0.85"/>
+        <Text></Text>
+      </FontString>
+
+      <!-- Aggro border overlay -->
+      <Texture parentKey="AggroBorder" setAllPoints="true" alpha="0">
+        <Color r="1" g="0" b="0" a="0.22"/>
+      </Texture>
+
+      <!-- Cluster highlight -->
+      <Texture parentKey="ClusterGlow" setAllPoints="true" alpha="0">
+        <Color r="0.1" g="0.8" b="1.0" a="0.18"/>
+      </Texture>
+
+      <!-- Cluster count -->
+      <FontString parentKey="ClusterText" inherits="GameFontHighlightSmall">
+        <Anchors>
+          <Anchor point="TOP" x="0" y="-2"/>
+        </Anchors>
+        <Color r="0.9" g="0.95" b="1" a="0.95"/>
+        <Text></Text>
+      </FontString>
+
+      <!-- Swiftmend/HoT-ready pip -->
+      <Texture parentKey="SwiftmendPip">
+        <Size x="6" y="6"/>
+        <Anchors>
+          <Anchor point="TOPRIGHT" x="-4" y="-14"/>
+        </Anchors>
+        <Color r="0.2" g="1" b="0.2" a="0"/>
+      </Texture>
+
+      <!-- Status text (offline/dead) -->
+      <FontString parentKey="StateText" inherits="GameFontHighlightSmall">
+        <Anchors>
+          <Anchor point="CENTER" x="0" y="0"/>
+        </Anchors>
+        <Color r="1" g="0.2" b="0.2"/>
+        <Text></Text>
+      </FontString>
+    </Frames>
+
+    <Scripts>
+      <OnLoad>
+        self:RegisterForClicks("AnyUp");
+        self:EnableMouseWheel(true);
+      </OnLoad>
+    </Scripts>
+  </Button>
+</Ui>
