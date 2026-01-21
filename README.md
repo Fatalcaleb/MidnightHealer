@@ -1,7 +1,7 @@
 # MidnightHealer
 
 **Author:** Fatalcaleb  
-**Version:** 0.12.7  
+**Version:** 0.12.8  
 **Expansion:** Midnight  
 
 MidnightHealer is a modern, triage-focused healing addon designed for raid and party healing in World of Warcraft.

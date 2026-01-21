@@ -140,12 +140,6 @@ f:SetScript("OnEvent", function()
 end)
 
 
-  for k in pairs(NS.DB) do NS.DB[k] = nil end
-  for k,v in pairs(decoded) do NS.DB[k] = v end
-  if NS.ApplyDefaults then NS.ApplyDefaults(NS.DB) end
-  if NS.RebuildFrames and not InCombatLockdown() then NS.RebuildFrames() end
-  return true
-end
 
 
 -- Profile Import/Export (no external libs)

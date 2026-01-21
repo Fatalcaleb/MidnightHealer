@@ -1,5 +1,8 @@
 # MidnightHealer – Changelog
 
+## v0.12.8
+- Fixed Profiles.lua syntax error preventing addon load
+
 ## v0.12.7
 - Fixed Core.lua syntax error preventing addon load (slash commands + test mode)
 

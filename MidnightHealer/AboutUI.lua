@@ -12,7 +12,7 @@ local function CreateAboutCanvas()
 
   local version = canvas:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
   version:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -6)
-  version:SetText("Version: 0.12.7")
+  version:SetText("Version: 0.12.8")
 
   local author = canvas:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
   author:SetPoint("TOPLEFT", version, "BOTTOMLEFT", 0, -4)
