@@ -148,13 +148,6 @@ f:SetScript("OnEvent", function(_, _, name)
   Print("Loaded. /mh opens settings. /mh lock | unlock | test | profile <name>")
 end)
 
-SLASH_MH1 = "/mh"
-SlashCmdList["MH"] = function(msg)
-  msg = (msg or ""):gsub("^%s+", ""):gsub("%s+$", "")
-  local lower = msg:lower()
-
-  if lower == "savecustom" then
-    if NS.SaveCurrentAsCustom then NS.SaveCurrentAsCustom(false) end
     return
   elseif lower == "savecustomspec" then
     if NS.SaveCurrentAsCustomForSpec then NS.SaveCurrentAsCustomForSpec(false) end
@@ -184,5 +177,47 @@ SlashCmdList["MH"] = function(msg)
     Settings.OpenToCategory("MidnightHealer")
   else
     Print("Open Settings and search for MidnightHealer.")
+  end
+end
+
+
+-- Slash commands (use unique key to avoid conflicts with other addons)
+SLASH_MIDNIGHTHEALER1 = "/mh"
+SLASH_MIDNIGHTHEALER2 = "/midnighthealer"
+SlashCmdList["MIDNIGHTHEALER"] = function(msg)
+  msg = (msg or ""):gsub("^%s+", ""):gsub("%s+$", "")
+  local lower = msg:lower()
+
+  if lower == "savecustom" then
+    if NS.SaveCurrentAsCustom then NS.SaveCurrentAsCustom(false) end
+    return
+  elseif lower == "savecustomspec" then
+    if NS.SaveCurrentAsCustomForSpec then NS.SaveCurrentAsCustomForSpec(false) end
+    return
+  elseif lower == "test" then
+    if NS.ToggleTestMode then NS.ToggleTestMode(nil) end
+    return
+  elseif lower == "lock" then
+    NS.DB.frame.locked = true
+    if NS.UpdateMoveHandle then NS.UpdateMoveHandle() end
+    if NS.Print then NS.Print("Frames locked.") end
+    return
+  elseif lower == "unlock" then
+    NS.DB.frame.locked = false
+    if NS.UpdateMoveHandle then NS.UpdateMoveHandle() end
+    if NS.Print then NS.Print("Frames unlocked.") end
+    return
+  elseif lower:match("^profile%s+") then
+    local name = lower:gsub("^profile%s+", "")
+    if NS.SetProfile then NS.SetProfile(name, true) end
+    if NS.Print then NS.Print("Profile: " .. name) end
+    return
+  end
+
+  if Settings and Settings.OpenToCategory then
+    Settings.OpenToCategory("MidnightHealer")
+  end
+  if NS.Print then
+    NS.Print("Commands: /mh test | /mh lock | /mh unlock | /mh profile <name> | /mh savecustom | /mh savecustomspec")
   end
 end

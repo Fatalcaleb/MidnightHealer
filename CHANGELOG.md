@@ -1,5 +1,18 @@
 # MidnightHealer – Changelog
 
+## v0.12.6
+- Updated Interface tag for 120000 + 120001
+
+## v0.12.5
+- Fixed addon load-breaking typo in Frames.lua (restores slash commands and test mode)
+- Made slash command registration conflict-proof
+
+## v0.12.4
+- Fixed collapsible Tools sections not showing body controls (explicit sizing)
+
+## v0.12.3
+- Tools panel now uses collapsible sections (Profiles / Presets / Test / Sharing)
+
 ## v0.12.2
 - Fixed Tools panel layout (scrollable; no clipping)
 - Fixed Test buttons to automatically enable test mode and show frames

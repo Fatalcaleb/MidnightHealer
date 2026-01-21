@@ -2,7 +2,7 @@
 ## Title: MidnightHealer
 ## Notes: Custom healing frames + click-casting + triage tools (Midnight-safe)
 ## Author: Fatalcaleb
-## Version: 0.12.2
+## Version: 0.12.6
 ## SavedVariables: MidnightHealerDB
 
 Frames.xml

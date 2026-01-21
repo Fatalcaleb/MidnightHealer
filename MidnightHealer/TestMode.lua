@@ -15,6 +15,8 @@ local function EnsureRoot()
   if Root then return end
   Root = CreateFrame("Frame", "MidnightHealerTestRoot", UIParent)
   Root:SetFrameStrata("DIALOG")
+  Root:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+  Root:SetSize(1, 1)
   Root:Hide()
 end
 
