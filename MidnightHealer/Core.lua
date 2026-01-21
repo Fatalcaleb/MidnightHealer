@@ -148,37 +148,8 @@ f:SetScript("OnEvent", function(_, _, name)
   Print("Loaded. /mh opens settings. /mh lock | unlock | test | profile <name>")
 end)
 
-    return
-  elseif lower == "savecustomspec" then
-    if NS.SaveCurrentAsCustomForSpec then NS.SaveCurrentAsCustomForSpec(false) end
-    return
-  elseif lower == "test" then
-    if NS.ToggleTestMode then NS.ToggleTestMode(nil) end
-    return
-  elseif lower == "lock" then
-    NS.DB.frame.locked = true
-    if NS.UpdateMoveHandle then NS.UpdateMoveHandle() end
-    if NS.Print then NS.Print("Frames locked.") end
-    return
-  elseif lower == "unlock" then
-    NS.DB.frame.locked = false
-    if NS.UpdateMoveHandle then NS.UpdateMoveHandle() end
-    if NS.Print then NS.Print("Frames unlocked.") end
-    return
-  end
 
-  local prof = msg:match("^profile%s+(.+)$")
-  if prof and prof ~= "" then
-    if NS.SetProfile then NS.SetProfile(prof, false) end
-    return
-  end
 
-  if Settings and Settings.OpenToCategory then
-    Settings.OpenToCategory("MidnightHealer")
-  else
-    Print("Open Settings and search for MidnightHealer.")
-  end
-end
 
 
 -- Slash commands (use unique key to avoid conflicts with other addons)

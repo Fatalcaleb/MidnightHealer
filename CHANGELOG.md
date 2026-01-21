@@ -1,5 +1,8 @@
 # MidnightHealer – Changelog
 
+## v0.12.7
+- Fixed Core.lua syntax error preventing addon load (slash commands + test mode)
+
 ## v0.12.6
 - Updated Interface tag for 120000 + 120001
 
