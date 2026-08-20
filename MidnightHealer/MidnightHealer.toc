@@ -7,6 +7,7 @@
 
 Frames.xml
 Core.lua
+Compat.lua
 Profiles.lua
 Presets.lua
 SpecProfiles.lua
