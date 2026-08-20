@@ -87,6 +87,13 @@ local function SetAggroHighlight(btn)
     return
   end
 
+  -- Threat state can itself become secret. Query the secret predicate before
+  -- attempting a numeric comparison; if restricted, simply hide the hint.
+  if C_Secrets and C_Secrets.ShouldUnitThreatStateBeSecret and C_Secrets.ShouldUnitThreatStateBeSecret(unit) then
+    btn.AggroBorder:SetAlpha(0)
+    return
+  end
+
   local threat = UnitThreatSituation(unit)
   btn.AggroBorder:SetAlpha((threat and threat >= 2) and 1 or 0)
 end
