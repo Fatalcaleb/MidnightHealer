@@ -1,5 +1,18 @@
 # MidnightHealer – Changelog
 
+## v0.13.0
+- Target WoW Midnight 12.1 (`Interface: 120100`)
+- Rebuilt `Frames.lua` to remove load-breaking undefined/orphaned code
+- Fixed `Core.lua` default-copy initialization order
+- Hardened secure click-casting and out-of-combat reapplication
+- Added `Compat.lua` for removed spellbook APIs using `C_SpellBook` / `C_Spell`
+- Removed health-percentage threshold calculations from live unit frames
+- Disabled legacy indexed aura/HoT scanning pending 12.1 AuraContainer implementation
+- Removed manual debuff-priority and Swiftmend-ready recommendation logic
+- Disabled injured-player cluster/AoE-heal recommendation logic
+- Guarded threat highlighting when threat state is secret
+- Updated README with 12.1 compatibility status
+
 ## v0.12.8
 - Fixed Profiles.lua syntax error preventing addon load
 
