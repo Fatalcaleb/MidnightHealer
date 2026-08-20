@@ -1,8 +1,8 @@
-## Interface: 120000, 120001
+## Interface: 120100
 ## Title: MidnightHealer
-## Notes: Custom healing frames + click-casting + triage tools (Midnight-safe)
+## Notes: Custom healing frames + secure click-casting for WoW Midnight 12.1
 ## Author: Fatalcaleb
-## Version: 0.12.8
+## Version: 0.13.0
 ## SavedVariables: MidnightHealerDB
 
 Frames.xml
