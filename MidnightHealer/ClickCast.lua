@@ -2,93 +2,89 @@
 -- ClickCast.lua
 local ADDON, NS = ...
 
+local function UnitForButton(btn)
+  if not btn then return nil end
+  local unit = btn:GetAttribute("unit") or btn.unit
+  if unit then btn.unit = unit end
+  return unit
+end
+
+local function SetSpellBinding(btn, prefix, button, spell)
+  local typeKey = prefix .. "type" .. button
+  local spellKey = prefix .. "spell" .. button
+
+  if spell and spell ~= "" then
+    btn:SetAttribute(typeKey, "spell")
+    btn:SetAttribute(spellKey, spell)
+  else
+    btn:SetAttribute(typeKey, nil)
+    btn:SetAttribute(spellKey, nil)
+  end
+end
+
 local function ApplyBindingsToButton(btn)
   if InCombatLockdown() then return end
-  if not btn or not btn.unit then return end
+  if not btn or not UnitForButton(btn) or not NS.DB then return end
 
-  local db = NS.DB.bindings
+  local db = NS.DB.bindings or {}
 
-  -- Buttons 1-5
-  btn:SetAttribute("type1", "spell")
-  btn:SetAttribute("type2", "spell")
-  btn:SetAttribute("type3", "spell")
-  btn:SetAttribute("type4", "spell")
-  btn:SetAttribute("type5", "spell")
+  SetSpellBinding(btn, "", "1", db["BUTTON1"])
+  SetSpellBinding(btn, "", "2", db["BUTTON2"])
+  SetSpellBinding(btn, "", "3", db["BUTTON3"])
+  SetSpellBinding(btn, "", "4", db["BUTTON4"])
+  SetSpellBinding(btn, "", "5", db["BUTTON5"])
 
-  btn:SetAttribute("spell1", db["BUTTON1"])
-  btn:SetAttribute("spell2", db["BUTTON2"])
-  btn:SetAttribute("spell3", db["BUTTON3"])
-  btn:SetAttribute("spell4", db["BUTTON4"])
-  btn:SetAttribute("spell5", db["BUTTON5"])
+  SetSpellBinding(btn, "shift-", "1", db["SHIFT-BUTTON1"])
+  SetSpellBinding(btn, "shift-", "2", db["SHIFT-BUTTON2"])
+  SetSpellBinding(btn, "shift-", "3", db["SHIFT-BUTTON3"])
 
-  -- SHIFT
-  btn:SetAttribute("shift-type1", "spell")
-  btn:SetAttribute("shift-type2", "spell")
-  btn:SetAttribute("shift-type3", "spell")
-  btn:SetAttribute("shift-spell1", db["SHIFT-BUTTON1"])
-  btn:SetAttribute("shift-spell2", db["SHIFT-BUTTON2"])
-  btn:SetAttribute("shift-spell3", db["SHIFT-BUTTON3"])
+  SetSpellBinding(btn, "ctrl-", "1", db["CTRL-BUTTON1"])
+  SetSpellBinding(btn, "ctrl-", "2", db["CTRL-BUTTON2"])
 
-  -- CTRL
-  btn:SetAttribute("ctrl-type1", "spell")
-  btn:SetAttribute("ctrl-type2", "spell")
-  btn:SetAttribute("ctrl-spell1", db["CTRL-BUTTON1"])
-  btn:SetAttribute("ctrl-spell2", db["CTRL-BUTTON2"])
+  SetSpellBinding(btn, "alt-", "1", db["ALT-BUTTON1"])
+  SetSpellBinding(btn, "alt-", "2", db["ALT-BUTTON2"])
 
-  -- ALT
-  btn:SetAttribute("alt-type1", "spell")
-  btn:SetAttribute("alt-type2", "spell")
-  btn:SetAttribute("alt-spell1", db["ALT-BUTTON1"])
-  btn:SetAttribute("alt-spell2", db["ALT-BUTTON2"])
-
-  -- Mousewheel (VuhDo-style)
-  btn:SetAttribute("type-wheelup", "spell")
-  btn:SetAttribute("type-wheeldown", "spell")
-  btn:SetAttribute("spell-wheelup", db["MOUSEWHEELUP"])
-  btn:SetAttribute("spell-wheeldown", db["MOUSEWHEELDOWN"])
-
-  btn:SetAttribute("shift-type-wheelup", "spell")
-  btn:SetAttribute("shift-type-wheeldown", "spell")
-  btn:SetAttribute("shift-spell-wheelup", db["SHIFT-MOUSEWHEELUP"])
-  btn:SetAttribute("shift-spell-wheeldown", db["SHIFT-MOUSEWHEELDOWN"])
-
-  btn:SetAttribute("ctrl-type-wheelup", "spell")
-  btn:SetAttribute("ctrl-type-wheeldown", "spell")
-  btn:SetAttribute("ctrl-spell-wheelup", db["CTRL-MOUSEWHEELUP"])
-  btn:SetAttribute("ctrl-spell-wheeldown", db["CTRL-MOUSEWHEELDOWN"])
-
-  btn:SetAttribute("alt-type-wheelup", "spell")
-  btn:SetAttribute("alt-type-wheeldown", "spell")
-  btn:SetAttribute("alt-spell-wheelup", db["ALT-MOUSEWHEELUP"])
-  btn:SetAttribute("alt-spell-wheeldown", db["ALT-MOUSEWHEELDOWN"])
+  SetSpellBinding(btn, "", "-wheelup", db["MOUSEWHEELUP"])
+  SetSpellBinding(btn, "", "-wheeldown", db["MOUSEWHEELDOWN"])
+  SetSpellBinding(btn, "shift-", "-wheelup", db["SHIFT-MOUSEWHEELUP"])
+  SetSpellBinding(btn, "shift-", "-wheeldown", db["SHIFT-MOUSEWHEELDOWN"])
+  SetSpellBinding(btn, "ctrl-", "-wheelup", db["CTRL-MOUSEWHEELUP"])
+  SetSpellBinding(btn, "ctrl-", "-wheeldown", db["CTRL-MOUSEWHEELDOWN"])
+  SetSpellBinding(btn, "alt-", "-wheelup", db["ALT-MOUSEWHEELUP"])
+  SetSpellBinding(btn, "alt-", "-wheeldown", db["ALT-MOUSEWHEELDOWN"])
 end
 
 local function ApplyAll()
-  if InCombatLockdown() then return end
+  if InCombatLockdown() then return false end
   local header = _G["MidnightHealerHeader"]
-  if not header then return end
+  if not header then return false end
 
-  local i = 1
-  while true do
-    local child = select(i, header:GetChildren())
-    if not child then break end
-    if child.unit then
+  local children = { header:GetChildren() }
+  for _, child in ipairs(children) do
+    if child and child.GetAttribute and child:GetAttribute("unit") then
       ApplyBindingsToButton(child)
     end
-    i = i + 1
   end
+  return true
 end
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:RegisterEvent("GROUP_ROSTER_UPDATE")
+f:RegisterEvent("PLAYER_REGEN_ENABLED")
 f:SetScript("OnEvent", function()
   if not NS.DB then return end
-  if InCombatLockdown() then return end
+  if InCombatLockdown() then
+    if NS.RequestSecureApply then NS.RequestSecureApply() end
+    return
+  end
   ApplyAll()
 end)
 
 function NS.ReapplyClickCast()
-  if InCombatLockdown() then return end
-  ApplyAll()
+  if InCombatLockdown() then
+    if NS.RequestSecureApply then NS.RequestSecureApply() end
+    return false
+  end
+  return ApplyAll()
 end
